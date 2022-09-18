@@ -1,6 +1,6 @@
 from django.db import models
 
-class DailyReturns (models.Model):
+class Order (models.Model):
     date = models.DateField ()
     returns = models.FloatField()
     equity_id = models.CharField(max_length=5)
