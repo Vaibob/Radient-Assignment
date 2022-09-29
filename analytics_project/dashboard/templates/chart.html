@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+<meta charset="utf-8">
+<title>Time Series Graph</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+</head>
+
+<body class="container-fluid">
+<center class="row">
+	<h1> <b>{{ equity_id }} : {{ equity_name }}</b></h1>
+</center>
+<hr />
+
+<div>
+	<div>
+	<canvas id="myChart"></canvas>
+	</div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<script>
+	var endpoint = '/api';
+
+	$.ajax({
+	method: "GET",
+	url: endpoint,
+	success: function(data) {
+		drawScatterPlot(data, 'myChart');
+	},
+	error: function(error_data) {
+		console.log(error_data);
+	}
+	})
+
+
+	function drawScatterPlot(data, id) {
+	var labels = data.labels;
+	var chartLabel = data.chartLabel;
+	var chartdata = data.chartdata;
+	var ctx = document.getElementById(id).getContext('2d');
+	var chart = new Chart(ctx, {
+		type: 'line',
+		data: {
+		labels: labels,
+		datasets: [{
+			label: chartLabel,
+			backgroundColor: 'rgb(255, 1, 200)',
+			borderColor: 'rgb(55, 1, 132)',
+			data: chartdata,
+			
+		}]
+		},
+
+		options: {
+		responsive: true,
+		maintainAspectRatio: true,
+		scales: {
+			xAxes: [{
+			display: true
+			}],
+			yAxes: [{
+			ticks: {
+				beginAtZero: true
+			}
+			}]
+		}
+		}
+
+	});
+	}
+
+</script>
+</body>
+
+</html>
