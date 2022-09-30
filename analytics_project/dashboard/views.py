@@ -31,22 +31,28 @@ def home(request):
     if request.method == 'GET':
         return render(request, 'index.html')
     else:
-        request.session['equity_id'] = request.POST['inp']
+        if request.POST.get('but') == 'sub':
+            request.session['equity_id'] = request.POST['inp']
 
-        equities = {
-            '10277':'Agilent Technologies Inc',
-            '10278':'Alcoa Inc', 
-            '10279':'Yahoo! Inc' ,
-            '10280':'American Addiction Centers',
-            '10281':'American Airlines Group Inc', 
-            '10282':'Altisource Asset Management Corp',
-            '10283':'Atlantic American Corp', 
-            '10284':"Aaron's, Inc",
-            '10285':'Applied Optoelectronics Inc',
-            '10286':"AAON, Inc" 
-        }
+            equities = {
+                '10277':'Agilent Technologies Inc',
+                '10278':'Alcoa Inc', 
+                '10279':'Yahoo! Inc' ,
+                '10280':'American Addiction Centers',
+                '10281':'American Airlines Group Inc', 
+                '10282':'Altisource Asset Management Corp',
+                '10283':'Atlantic American Corp', 
+                '10284':"Aaron's, Inc",
+                '10285':'Applied Optoelectronics Inc',
+                '10286':"AAON, Inc" 
+            }
 
-        return render(request, 'chart.html', context={
-            'equity_id': request.session['equity_id'],
-            'equity_name': equities[request.session['equity_id']]
-        })
+            return render(request, 'chart.html', context={
+                'equity_id': request.session['equity_id'],
+                'equity_name': equities[request.session['equity_id']]
+            })
+        if request.POST.get('but') == 'del':
+            del_obj = Order.objects.filter(equity_id=request.POST.get('eq'), date=request.POST.get('date')).delete()
+            return render(request, 'delete.html', context={
+                'del': del_obj
+            })

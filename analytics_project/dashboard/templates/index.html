@@ -24,7 +24,16 @@
         {% csrf_token %}
         Enter the Equity ID:  <input type="number" name="inp">
 
-        <button type="submit">SUBMIT</button>
+        <button type="submit" name="but" value="sub">SUBMIT</button>
+
+        <br><br>
+
+        Delete Record<br>
+
+        Date:  <input type="date" name="date">
+        Equity ID:  <input type="number" name="eq">
+
+        <button type="submit" name="but" value="del">DELETE</button>
 
     </form>
 </body>
